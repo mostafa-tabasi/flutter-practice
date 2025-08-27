@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/dice_roller/dice_roller_screen.dart';
+import 'package:flutter_practice/quiz_app/quiz_app_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +12,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Navigation Example',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
@@ -26,10 +26,20 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Flutter Practice")),
+      backgroundColor: const Color.fromARGB(255, 50, 50, 50),
+      appBar: AppBar(
+        title: const Text(
+          "Flutter Practice",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: const Color.fromARGB(255, 77, 76, 76),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
-        children: [NavigatorButton("Dice Roller", const DiceRollerScreen())],
+        children: [
+          NavigatorButton("Dice Roller", const DiceRollerScreen()),
+          NavigatorButton("Quiz App", const QuizAppScreen()),
+        ],
       ),
     );
   }
