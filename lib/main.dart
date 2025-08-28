@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/dice_roller/dice_roller_screen.dart';
-import 'package:flutter_practice/quiz_app/quiz_app_screen.dart';
+import 'package:flutter_practice/quiz/quiz_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         children: [
           NavigatorButton("Dice Roller", const DiceRollerScreen()),
-          NavigatorButton("Quiz App", const QuizAppScreen()),
+          NavigatorButton("Quiz App", const QuizScreen()),
         ],
       ),
     );
