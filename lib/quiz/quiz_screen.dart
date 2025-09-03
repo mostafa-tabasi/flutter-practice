@@ -37,7 +37,10 @@ class _QuizScreenState extends State<QuizScreen> {
 
       case _resultScreenId:
       default:
-        activeScreenWirget = ResultScreen(selectedAnswers: choosenAnswers);
+        activeScreenWirget = ResultScreen(
+          selectedAnswers: choosenAnswers,
+          onRestartQuiz: restartQuiz,
+        );
         break;
     }
 
@@ -83,5 +86,10 @@ class _QuizScreenState extends State<QuizScreen> {
     setState(() {
       activeScreenId = _resultScreenId;
     });
+  }
+
+  void restartQuiz() {
+    choosenAnswers = [];
+    navigateToQuestionsScreen();
   }
 }
