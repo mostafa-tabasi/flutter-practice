@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_practice/quiz/data/questions.dart';
 import 'package:flutter_practice/quiz/questions_screen.dart';
+import 'package:flutter_practice/quiz/result_screen.dart';
 import 'package:flutter_practice/quiz/start_screen.dart';
 
 const _startScreenId = "start-screen";
 const _questionsScreenId = "questions-screen";
+const _resultScreenId = "result-screen";
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
@@ -15,12 +18,30 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-  var activeScreen = _startScreenId;
+  var activeScreenId = _startScreenId;
+  List<String> choosenAnswers = [];
 
-  void switchScreen() {
-    setState(() {
-      activeScreen = _questionsScreenId;
-    });
+  Widget getActiveScreen() {
+    Widget activeScreenWirget;
+
+    switch (activeScreenId) {
+      case _startScreenId:
+        activeScreenWirget = StartScreen(
+          onStartQuiz: navigateToQuestionsScreen,
+        );
+        break;
+
+      case _questionsScreenId:
+        activeScreenWirget = QuestionsScreen(onSelectAnswer: chooseAnswer);
+        break;
+
+      case _resultScreenId:
+      default:
+        activeScreenWirget = ResultScreen(selectedAnswers: choosenAnswers);
+        break;
+    }
+
+    return activeScreenWirget;
   }
 
   @override
@@ -37,10 +58,30 @@ class _QuizScreenState extends State<QuizScreen> {
             end: Alignment.bottomRight,
           ),
         ),
-        child: activeScreen == _startScreenId
-            ? StartScreen(switchScreen)
-            : QuestionsScreen(),
+        child: getActiveScreen(),
       ),
     );
+  }
+
+  void navigateToQuestionsScreen() {
+    setState(() {
+      activeScreenId = _questionsScreenId;
+    });
+  }
+
+  void chooseAnswer(String answer) {
+    choosenAnswers.add(answer);
+
+    if (questionsFinished) {
+      navigateToResultScreen();
+    }
+  }
+
+  bool get questionsFinished => choosenAnswers.length >= questions.length;
+
+  void navigateToResultScreen() {
+    setState(() {
+      activeScreenId = _resultScreenId;
+    });
   }
 }

@@ -4,7 +4,9 @@ import 'package:flutter_practice/quiz/data/questions.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuestionsScreen extends StatefulWidget {
-  const QuestionsScreen({super.key});
+  const QuestionsScreen({super.key, required this.onSelectAnswer});
+
+  final void Function(String answer) onSelectAnswer;
 
   @override
   State<QuestionsScreen> createState() {
@@ -31,8 +33,8 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
               currentQuestion.question,
               textAlign: TextAlign.center,
               style: GoogleFonts.lato(
-                color: Colors.white,
-                fontSize: 24,
+                color: Color.fromARGB(172, 255, 255, 255),
+                fontSize: 28,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -41,11 +43,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
               return AnswerButton(
                 text: answer,
                 onPressed: () {
-                  if (currentQuestionIndex + 1 < questions.length) {
-                    answerQuestion(answer);
-                  } else {
-                    // todo: navigate to result screen
-                  }
+                  answerQuestion(answer);
                 },
               );
             }),
@@ -56,7 +54,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
   }
 
   void answerQuestion(String answer) {
-    chosenAnswers.add(answer);
+    widget.onSelectAnswer(answer);
     setState(() {
       currentQuestionIndex++;
     });
