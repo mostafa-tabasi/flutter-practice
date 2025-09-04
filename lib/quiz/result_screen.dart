@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/quiz/data/questions.dart';
+import 'package:flutter_practice/quiz/widgets/questions_summary.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ResultScreen extends StatelessWidget {
@@ -14,6 +15,11 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final numTotalQuestions = questions.length;
+    final numCorrectAnswers = getSummaryData().where((data) {
+      return data['user_answer'] == data['correct_answer'];
+    }).length;
+
     return SizedBox(
       width: double.infinity,
       child: Container(
@@ -23,7 +29,7 @@ class ResultScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "You answered ${getCorrectAnswersAmount()} out of ${questions.length} questions correctly!",
+                "You answered $numCorrectAnswers out of $numTotalQuestions questions correctly!",
                 style: GoogleFonts.lato(
                   color: const Color.fromARGB(181, 255, 255, 255),
                   fontSize: 28,
@@ -31,14 +37,9 @@ class ResultScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 40),
-              ...selectedAnswers.map(
-                (answer) => Text(
-                  answer,
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-              ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
+              QuestionsSummary(getSummaryData()),
+              const SizedBox(height: 40),
               OutlinedButton.icon(
                 onPressed: onRestartQuiz,
                 style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
@@ -52,14 +53,18 @@ class ResultScreen extends StatelessWidget {
     );
   }
 
-  int getCorrectAnswersAmount() {
-    int correctAnswers = 0;
-    for (int i = 0; i < questions.length; i++) {
-      // the first option is always the correct answer (index 0)
-      if (questions[i].answers[0] == selectedAnswers[i]) {
-        correctAnswers++;
-      }
+  List<Map<String, Object>> getSummaryData() {
+    final List<Map<String, Object>> summary = [];
+
+    for (var i = 0; i < selectedAnswers.length; i++) {
+      summary.add({
+        'question_index': i,
+        'question': questions[i].question,
+        'correct_answer': questions[i].answers[0],
+        'user_answer': selectedAnswers[i],
+      });
     }
-    return correctAnswers;
+
+    return summary;
   }
 }
