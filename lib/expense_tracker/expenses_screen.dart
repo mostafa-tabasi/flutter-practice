@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/expense_tracker/models/expense.dart';
+import 'package:flutter_practice/expense_tracker/widgets/add_new_expense.dart';
 import 'package:flutter_practice/expense_tracker/widgets/expenses_list.dart';
 
 class ExpensesScreen extends StatefulWidget {
@@ -27,12 +28,26 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
     ),
   ];
 
+  void _openAddExpenseBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) {
+        return AddNewExpense();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Expenses Tracker'),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.add))],
+        actions: [
+          IconButton(
+            onPressed: _openAddExpenseBottomSheet,
+            icon: Icon(Icons.add),
+          ),
+        ],
       ),
       body: Column(
         children: [
