@@ -14,6 +14,7 @@ class _AddNewExpenseState extends State<AddNewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime? _selectedDate;
+  Category _selectedCategory = Category.food;
 
   @override
   void dispose() {
@@ -88,6 +89,25 @@ class _AddNewExpenseState extends State<AddNewExpense> {
           SizedBox(height: 16),
           Row(
             children: [
+              DropdownButton(
+                value: _selectedCategory,
+                items: Category.values
+                    .map(
+                      (category) => DropdownMenuItem(
+                        value: category,
+                        child: Text(category.name.toUpperCase()),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (item) {
+                  if (item == null) return;
+
+                  setState(() {
+                    _selectedCategory = item;
+                  });
+                },
+              ),
+              Spacer(),
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
