@@ -32,9 +32,19 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
     showModalBottomSheet(
       context: context,
       builder: (ctx) {
-        return AddNewExpense();
+        return AddNewExpense(
+          onSubmit: (Expense expense) {
+            _addExpense(expense);
+          },
+        );
       },
     );
+  }
+
+  void _addExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.add(expense);
+    });
   }
 
   @override

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/expense_tracker/models/expense.dart';
 
 class AddNewExpense extends StatefulWidget {
-  const AddNewExpense({super.key});
+  const AddNewExpense({super.key, required this.onSubmit});
+
+  final void Function(Expense expense) onSubmit;
 
   @override
   State<AddNewExpense> createState() {
@@ -40,6 +42,44 @@ class _AddNewExpenseState extends State<AddNewExpense> {
     // another way to get the selected date without async/await
     // .then((onValue){
     // });
+  }
+
+  void _submitExpenseData() {
+    final enteredAmount = double.tryParse(_amountController.text);
+    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
+    final titleIsInvalid = _titleController.text.trim().isEmpty;
+    final dateIsInvalid = _selectedDate == null;
+
+    if (amountIsInvalid || titleIsInvalid || dateIsInvalid) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Invalid input'),
+          content: const Text(
+            'Please make sure a valid title, amount, date and category was entered.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: Text('Okay'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    widget.onSubmit(
+      Expense(
+        title: _titleController.text,
+        amount: enteredAmount,
+        date: _selectedDate!,
+        category: _selectedCategory,
+      ),
+    );
+    Navigator.pop(context);
   }
 
   @override
@@ -116,9 +156,7 @@ class _AddNewExpenseState extends State<AddNewExpense> {
               ),
               SizedBox(width: 8),
               ElevatedButton(
-                onPressed: () {
-                  print(_titleController.text);
-                },
+                onPressed: _submitExpenseData,
                 child: const Text('Save Expense'),
               ),
             ],
