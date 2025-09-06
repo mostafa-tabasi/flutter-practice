@@ -47,10 +47,31 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
     });
   }
 
+  void _insertExpense(Expense expense, int position) {
+    setState(() {
+      _registeredExpenses.insert(position, expense);
+    });
+  }
+
   void _removeExpense(Expense expense) {
+    int expenseIndex = _registeredExpenses.indexOf(expense);
+
     setState(() {
       _registeredExpenses.remove(expense);
     });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('Expense deleted'),
+        duration: const Duration(seconds: 3),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            _insertExpense(expense, expenseIndex);
+          },
+        ),
+      ),
+    );
   }
 
   @override
