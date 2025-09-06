@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_practice/expense_tracker/models/expense.dart';
 
 class AddNewExpense extends StatefulWidget {
   const AddNewExpense({super.key});
@@ -12,12 +13,32 @@ class AddNewExpense extends StatefulWidget {
 class _AddNewExpenseState extends State<AddNewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
+  DateTime? _selectedDate;
 
   @override
   void dispose() {
     _titleController.dispose();
     _amountController.dispose();
     super.dispose();
+  }
+
+  void _showDatePicker() async {
+    var now = DateTime.now();
+    var lastYear = DateTime(now.year - 1, now.month, now.day);
+    var selectedDate = await showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: lastYear,
+      lastDate: now,
+    );
+
+    setState(() {
+      _selectedDate = selectedDate;
+    });
+
+    // another way to get the selected date without async/await
+    // .then((onValue){
+    // });
   }
 
   @override
@@ -31,15 +52,40 @@ class _AddNewExpenseState extends State<AddNewExpense> {
             maxLength: 50,
             decoration: const InputDecoration(label: Text('Title')),
           ),
-          TextField(
-            controller: _amountController,
-            maxLength: 10,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              label: Text('Amount'),
-              prefixText: '\$ ',
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _amountController,
+                  maxLength: 10,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    label: Text('Amount'),
+                    prefixText: '\$ ',
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      _selectedDate == null
+                          ? 'No Date Selected'
+                          : formatter.format(_selectedDate!),
+                    ),
+                    SizedBox(width: 8),
+                    IconButton(
+                      onPressed: _showDatePicker,
+                      icon: Icon(Icons.calendar_month),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
+          SizedBox(height: 16),
           Row(
             children: [
               TextButton(
