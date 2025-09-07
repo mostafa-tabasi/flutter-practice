@@ -90,17 +90,46 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
             ],
           );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Expenses Tracker'),
-        actions: [
-          IconButton(
-            onPressed: _openAddExpenseBottomSheet,
-            icon: Icon(Icons.add),
+    return MaterialApp(
+      theme: ThemeData().copyWith(
+        colorScheme: kColorScheme,
+        appBarTheme: const AppBarTheme().copyWith(
+          backgroundColor: kColorScheme.onPrimaryContainer,
+          foregroundColor: kColorScheme.primaryContainer,
+        ),
+        cardTheme: const CardThemeData().copyWith(
+          color: kColorScheme.secondaryContainer,
+          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kColorScheme.primaryContainer,
           ),
-        ],
+        ),
+        textTheme: ThemeData().textTheme.copyWith(
+          titleLarge: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: kColorScheme.onSecondaryContainer,
+            fontSize: 16,
+          )
+        )
       ),
-      body: mainContent,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Expenses Tracker'),
+          actions: [
+            IconButton(
+              onPressed: _openAddExpenseBottomSheet,
+              icon: Icon(Icons.add),
+            ),
+          ],
+        ),
+        body: mainContent,
+      ),
     );
   }
 }
+
+var kColorScheme = ColorScheme.fromSeed(
+  seedColor: Color.fromARGB(255, 101, 110, 145),
+);
