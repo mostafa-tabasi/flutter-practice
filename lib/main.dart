@@ -4,6 +4,15 @@ import 'package:flutter_practice/expense_tracker/expenses_screen.dart';
 import 'package:flutter_practice/quiz/quiz_screen.dart';
 
 void main() {
+  /*
+  // To lock the rotation on Portrait only
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((
+    onValue,
+  ) {
+    runApp(const MyApp());
+  });
+  */
   runApp(const MyApp());
 }
 

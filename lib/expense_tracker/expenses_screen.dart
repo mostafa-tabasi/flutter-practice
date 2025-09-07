@@ -77,11 +77,26 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
     Widget mainContent = _registeredExpenses.isEmpty
         ? Center(child: Text('No expenses found. Start adding some!'))
-        : Column(
+        : (width < height)
+        ? Column(
             children: [
               Chart(expenses: _registeredExpenses),
+              Expanded(
+                child: ExpensesList(
+                  expenses: _registeredExpenses,
+                  onRemoveExpense: _removeExpense,
+                ),
+              ),
+            ],
+          )
+        : Row(
+            children: [
+              Expanded(child: Chart(expenses: _registeredExpenses)),
               Expanded(
                 child: ExpensesList(
                   expenses: _registeredExpenses,
