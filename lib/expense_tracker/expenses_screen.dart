@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/expense_tracker/models/expense.dart';
 import 'package:flutter_practice/expense_tracker/widgets/add_new_expense.dart';
+import 'package:flutter_practice/expense_tracker/widgets/chart/chart.dart';
 import 'package:flutter_practice/expense_tracker/widgets/expenses_list.dart';
 
 class ExpensesScreen extends StatefulWidget {
@@ -80,7 +81,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
         ? Center(child: Text('No expenses found. Start adding some!'))
         : Column(
             children: [
-              const Text("The chart"),
+              Chart(expenses: _registeredExpenses),
               Expanded(
                 child: ExpensesList(
                   expenses: _registeredExpenses,
