@@ -91,6 +91,18 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
           );
 
     return MaterialApp(
+      darkTheme: ThemeData.dark().copyWith(
+        colorScheme: kDarkColorScheme,
+        cardTheme: const CardThemeData().copyWith(
+          color: kDarkColorScheme.secondaryContainer,
+          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kDarkColorScheme.primaryContainer,
+          ),
+        ),
+      ),
       theme: ThemeData().copyWith(
         colorScheme: kColorScheme,
         appBarTheme: const AppBarTheme().copyWith(
@@ -111,8 +123,8 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
             fontWeight: FontWeight.bold,
             color: kColorScheme.onSecondaryContainer,
             fontSize: 16,
-          )
-        )
+          ),
+        ),
       ),
       home: Scaffold(
         appBar: AppBar(
@@ -132,4 +144,9 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
 
 var kColorScheme = ColorScheme.fromSeed(
   seedColor: Color.fromARGB(255, 101, 110, 145),
+);
+
+var kDarkColorScheme = ColorScheme.fromSeed(
+  brightness: Brightness.dark,
+  seedColor: Color.fromARGB(255, 45, 52, 87),
 );
