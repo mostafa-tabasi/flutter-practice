@@ -19,32 +19,32 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreenState extends State<QuizScreen> {
   var activeScreenId = _startScreenId;
-  List<String> choosenAnswers = [];
+  List<String> chosenAnswers = [];
 
   Widget getActiveScreen() {
-    Widget activeScreenWirget;
+    Widget activeScreenWidget;
 
     switch (activeScreenId) {
       case _startScreenId:
-        activeScreenWirget = StartScreen(
+        activeScreenWidget = StartScreen(
           onStartQuiz: navigateToQuestionsScreen,
         );
         break;
 
       case _questionsScreenId:
-        activeScreenWirget = QuestionsScreen(onSelectAnswer: chooseAnswer);
+        activeScreenWidget = QuestionsScreen(onSelectAnswer: chooseAnswer);
         break;
 
       case _resultScreenId:
       default:
-        activeScreenWirget = ResultScreen(
-          selectedAnswers: choosenAnswers,
+        activeScreenWidget = ResultScreen(
+          selectedAnswers: chosenAnswers,
           onRestartQuiz: restartQuiz,
         );
         break;
     }
 
-    return activeScreenWirget;
+    return activeScreenWidget;
   }
 
   @override
@@ -73,14 +73,14 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   void chooseAnswer(String answer) {
-    choosenAnswers.add(answer);
+    chosenAnswers.add(answer);
 
     if (questionsFinished) {
       navigateToResultScreen();
     }
   }
 
-  bool get questionsFinished => choosenAnswers.length >= questions.length;
+  bool get questionsFinished => chosenAnswers.length >= questions.length;
 
   void navigateToResultScreen() {
     setState(() {
@@ -89,7 +89,7 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   void restartQuiz() {
-    choosenAnswers = [];
+    chosenAnswers = [];
     navigateToQuestionsScreen();
   }
 }
