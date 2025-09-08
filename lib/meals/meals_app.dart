@@ -11,8 +11,8 @@ final theme = ThemeData(
   textTheme: GoogleFonts.latoTextTheme(),
 );
 
-class Meals extends StatelessWidget {
-  const Meals({super.key});
+class MealsApp extends StatelessWidget {
+  const MealsApp({super.key});
 
   @override
   Widget build(BuildContext context) {

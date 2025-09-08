@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/dice_roller/dice_roller_screen.dart';
 import 'package:flutter_practice/expense_tracker/expenses_screen.dart';
-import 'package:flutter_practice/meals/meals.dart';
+import 'package:flutter_practice/meals/meals_app.dart';
 import 'package:flutter_practice/quiz/quiz_screen.dart';
 
 void main() {
@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
           NavigatorButton("Dice Roller", const DiceRollerScreen()),
           NavigatorButton("Quiz App", const QuizScreen()),
           NavigatorButton("Expense Tracker", const ExpensesScreen()),
-          NavigatorButton("Meals App", const Meals()),
+          NavigatorButton("Meals App", const MealsApp()),
         ],
       ),
     );
