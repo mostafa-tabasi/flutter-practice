@@ -16,16 +16,27 @@ class _TabsState extends State<Tabs> {
   int _selectedPageIndex = 0;
   final List<Meal> _favoriteMeals = [];
 
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
   void _toggleMealFavoriteStatus(Meal meal) {
     var isExisting = _favoriteMeals.contains(meal);
 
-    setState(() {
-      if (isExisting) {
+    if (isExisting) {
+      setState(() {
         _favoriteMeals.remove(meal);
-      } else {
+      });
+      _showMessage('Meal is no longer a favorite');
+    } else {
+      setState(() {
         _favoriteMeals.add(meal);
-      }
-    });
+      });
+      _showMessage('Marked as a favorite');
+    }
   }
 
   void _selectPage(int index) {
