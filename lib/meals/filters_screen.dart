@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_practice/meals/providers/filters_provider.dart';
 import 'package:flutter_practice/meals/widgets/filter_item.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum Filter { glutenFree, lactoseFree, vegetarianFree, veganFree }
-
-class FiltersScreen extends StatefulWidget {
-  const FiltersScreen({super.key, required this.currentFilters});
-
-  final Map<Filter, bool> currentFilters;
+class FiltersScreen extends ConsumerStatefulWidget {
+  const FiltersScreen({super.key});
 
   @override
-  State<FiltersScreen> createState() {
+  ConsumerState<FiltersScreen> createState() {
     return _FiltersScreenState();
   }
 }
 
-class _FiltersScreenState extends State<FiltersScreen> {
+class _FiltersScreenState extends ConsumerState<FiltersScreen> {
   var _glutenFreeFilter = false;
   var _lactoseFreeFilter = false;
   var _vegetarianFreeFilter = false;
@@ -23,10 +21,13 @@ class _FiltersScreenState extends State<FiltersScreen> {
   @override
   void initState() {
     super.initState();
-    _glutenFreeFilter = widget.currentFilters[Filter.glutenFree]!;
-    _lactoseFreeFilter = widget.currentFilters[Filter.lactoseFree]!;
-    _vegetarianFreeFilter = widget.currentFilters[Filter.vegetarianFree]!;
-    _veganFreeFilter = widget.currentFilters[Filter.veganFree]!;
+    // Use read instead of watch because "initState" only calls once
+    final activeFilters = ref.read(filtersProvider);
+
+    _glutenFreeFilter = activeFilters[Filter.glutenFree]!;
+    _lactoseFreeFilter = activeFilters[Filter.lactoseFree]!;
+    _vegetarianFreeFilter = activeFilters[Filter.vegetarian]!;
+    _veganFreeFilter = activeFilters[Filter.vegan]!;
   }
 
   @override
@@ -47,13 +48,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
       */
       body: WillPopScope(
         onWillPop: () async {
-          Navigator.of(context).pop({
+          ref.read(filtersProvider.notifier).setFilters({
             Filter.glutenFree: _glutenFreeFilter,
             Filter.lactoseFree: _lactoseFreeFilter,
-            Filter.vegetarianFree: _vegetarianFreeFilter,
-            Filter.veganFree: _veganFreeFilter,
+            Filter.vegetarian: _vegetarianFreeFilter,
+            Filter.vegan: _veganFreeFilter,
           });
-          return false;
+
+          return true;
         },
         child: Column(
           children: [
