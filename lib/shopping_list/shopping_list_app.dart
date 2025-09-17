@@ -16,6 +16,6 @@ class ShoppingListApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: theme, home: ShoppingListScreen());
+    return MaterialApp(theme: theme, home: const ShoppingListScreen());
   }
 }
