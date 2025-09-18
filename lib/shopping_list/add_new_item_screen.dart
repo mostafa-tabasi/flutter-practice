@@ -28,7 +28,7 @@ class _AddNewItemScreenState extends State<AddNewItemScreen> {
         'flutter-practice-mstf-default-rtdb.asia-southeast1.firebasedatabase.app',
         'shopping-list.json',
       );
-      final response = await http.post(
+      await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
