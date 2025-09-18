@@ -55,14 +55,10 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
   }
 
   void _addNewItem() async {
-    /*final newItem = */
-    await Navigator.of(context).push<GroceryItem>(
+    final newItem = await Navigator.of(context).push<GroceryItem>(
       MaterialPageRoute(builder: (ctx) => const AddNewItemScreen()),
     );
 
-    _loadGroceries();
-
-    /*
     if (newItem == null) {
       return;
     }
@@ -70,7 +66,6 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     setState(() {
       _groceryItems.add(newItem);
     });
-    */
   }
 
   void _removeItem(GroceryItem item) {

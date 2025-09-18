@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/shopping_list/data/categories.dart';
 import 'package:flutter_practice/shopping_list/models/category.dart';
+import 'package:flutter_practice/shopping_list/models/grocery_item.dart';
 import 'package:http/http.dart' as http;
 
 class AddNewItemScreen extends StatefulWidget {
@@ -28,7 +29,7 @@ class _AddNewItemScreenState extends State<AddNewItemScreen> {
         'flutter-practice-mstf-default-rtdb.asia-southeast1.firebasedatabase.app',
         'shopping-list.json',
       );
-      await http.post(
+      final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
@@ -38,22 +39,20 @@ class _AddNewItemScreenState extends State<AddNewItemScreen> {
         }),
       );
 
+      final Map<String, dynamic> resData = json.decode(response.body);
+
       if (!context.mounted) {
         return;
       }
 
-      Navigator.of(context).pop();
-
-      /*
       Navigator.of(context).pop(
         GroceryItem(
-          id: DateTime.now().toString(),
+          id: resData['name'],
           name: _enteredName,
           quantity: _enteredQuantity,
           category: _selectedCategory,
         ),
       );
-      */
     }
   }
 
