@@ -16,6 +16,7 @@ class ShoppingListScreen extends StatefulWidget {
 class _ShoppingListScreenState extends State<ShoppingListScreen> {
   List<GroceryItem> _groceryItems = [];
   var _isLoading = true;
+  String? _error;
 
   @override
   void initState() {
@@ -29,6 +30,14 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
       'shopping-list.json',
     );
     final response = await http.get(url);
+
+    if (response.statusCode >= 400) {
+      setState(() {
+        _isLoading = false;
+        _error = 'Failed to fetch the data. Please try again later.';
+      });
+      return;
+    }
 
     final listData = json.decode(response.body);
     final List<GroceryItem> _loadedItems = [];
@@ -107,6 +116,10 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
           );
         },
       );
+    }
+
+    if (_error != null) {
+      content = Center(child: Text(_error!));
     }
 
     return Scaffold(
