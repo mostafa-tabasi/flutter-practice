@@ -20,10 +20,15 @@ class _AddNewItemScreenState extends State<AddNewItemScreen> {
   var _enteredName = '';
   var _enteredQuantity = 1;
   var _selectedCategory = categories[Categories.vegetables]!;
+  var _isSending = false;
 
   void _saveItem() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+      setState(() {
+        _isSending = true;
+      });
+
 
       final url = Uri.https(
         'flutter-practice-mstf-default-rtdb.asia-southeast1.firebasedatabase.app',
@@ -138,9 +143,25 @@ class _AddNewItemScreenState extends State<AddNewItemScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(onPressed: () {}, child: const Text('Reset')),
+                  TextButton(
+                    onPressed: _isSending
+                        ? null
+                        : () {
+                            _formKey.currentState!.reset();
+                          },
+                    child: const Text('Reset'),
+                  ),
                   SizedBox(width: 8),
-                  ElevatedButton(onPressed: _saveItem, child: Text('Add Item')),
+                  ElevatedButton(
+                    onPressed: _isSending ? null : _saveItem,
+                    child: _isSending
+                        ? SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(),
+                          )
+                        : Text('Add Item'),
+                  ),
                 ],
               ),
             ],
