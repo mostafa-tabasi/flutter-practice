@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/favorite_places/add_new_place_screen.dart';
+import 'package:flutter_practice/favorite_places/models/place_item.dart';
+import 'package:flutter_practice/favorite_places/place_details.dart';
 import 'package:flutter_practice/favorite_places/providers/places_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,7 +26,12 @@ class FavoritePlacesScreen extends ConsumerWidget {
         itemCount: myPlaces.length,
         itemBuilder: (ctx, index) {
           final item = myPlaces[index];
-          return ListTile(title: Text(item.title), onTap: () {});
+          return ListTile(
+            title: Text(item.title),
+            onTap: () {
+              _openPlaceDetails(ctx, item);
+            },
+          );
         },
       );
     }
@@ -35,9 +42,7 @@ class FavoritePlacesScreen extends ConsumerWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (ctx) => const AddNewPlaceScreen()),
-              );
+              _openAddNewPlace(context);
             },
             icon: Icon(Icons.add),
           ),
@@ -45,5 +50,17 @@ class FavoritePlacesScreen extends ConsumerWidget {
       ),
       body: content,
     );
+  }
+
+  void _openPlaceDetails(BuildContext context, PlaceItem item) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (ctx) => PlaceDetailsScreen(place: item)),
+    );
+  }
+
+  void _openAddNewPlace(BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (ctx) => const AddNewPlaceScreen()));
   }
 }
