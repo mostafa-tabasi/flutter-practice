@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/favorite_places/models/place_item.dart';
 import 'package:flutter_practice/favorite_places/providers/places_provider.dart';
+import 'package:flutter_practice/favorite_places/widgets/image_input.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AddNewPlaceScreen extends ConsumerStatefulWidget {
@@ -22,12 +23,7 @@ class _AddNewPlaceScreenState extends ConsumerState<AddNewPlaceScreen> {
 
       ref
           .read(placesProvider.notifier)
-          .addPlace(
-            PlaceItem(
-              id: DateTime.now().millisecond.toString(),
-              title: _enteredTitle,
-            ),
-          );
+          .addPlace(PlaceItem(title: _enteredTitle));
 
       Navigator.of(context).pop();
     }
@@ -62,6 +58,8 @@ class _AddNewPlaceScreenState extends ConsumerState<AddNewPlaceScreen> {
                   _enteredTitle = value!;
                 },
               ),
+              SizedBox(height: 12,),
+              ImageInput(),
               SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
