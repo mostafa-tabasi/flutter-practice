@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/dice_roller/dice_roller_screen.dart';
 import 'package:flutter_practice/expense_tracker/expenses_screen.dart';
 import 'package:flutter_practice/favorite_places/favorite_places_app.dart';
-import 'package:flutter_practice/favorite_places/favorite_places_screen.dart';
 import 'package:flutter_practice/meals/meals_app.dart';
 import 'package:flutter_practice/quiz/quiz_screen.dart';
 import 'package:flutter_practice/shopping_list/shopping_list_app.dart';
@@ -57,7 +56,10 @@ class HomeScreen extends StatelessWidget {
           NavigatorButton("Expense Tracker", const ExpensesScreen()),
           NavigatorButton("Meals App", ProviderScope(child: const MealsApp())),
           NavigatorButton("Shopping List", const ShoppingListApp()),
-          NavigatorButton("Favorite Places", const FavoritePlacesApp()),
+          NavigatorButton(
+            "Favorite Places",
+            ProviderScope(child: const FavoritePlacesApp()),
+          ),
         ],
       ),
     );
