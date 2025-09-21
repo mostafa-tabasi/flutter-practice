@@ -3,6 +3,7 @@ import 'package:flutter_practice/favorite_places/add_new_place_screen.dart';
 import 'package:flutter_practice/favorite_places/models/place_item.dart';
 import 'package:flutter_practice/favorite_places/place_details.dart';
 import 'package:flutter_practice/favorite_places/providers/places_provider.dart';
+import 'package:flutter_practice/favorite_places/widgets/place.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FavoritePlacesScreen extends ConsumerWidget {
@@ -26,8 +27,8 @@ class FavoritePlacesScreen extends ConsumerWidget {
         itemCount: myPlaces.length,
         itemBuilder: (ctx, index) {
           final item = myPlaces[index];
-          return ListTile(
-            title: Text(item.title),
+          return Place(
+            placeItem: item,
             onTap: () {
               _openPlaceDetails(ctx, item);
             },
@@ -48,7 +49,10 @@ class FavoritePlacesScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: content,
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+        child: content,
+      ),
     );
   }
 

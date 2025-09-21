@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/favorite_places/models/place_item.dart';
 import 'package:flutter_practice/favorite_places/providers/places_provider.dart';
@@ -16,14 +18,15 @@ class AddNewPlaceScreen extends ConsumerStatefulWidget {
 class _AddNewPlaceScreenState extends ConsumerState<AddNewPlaceScreen> {
   final _formKey = GlobalKey<FormState>();
   var _enteredTitle = '';
+  File? _selectedImage;
 
   void _saveItem() {
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate() && _selectedImage != null) {
       _formKey.currentState!.save();
 
       ref
           .read(placesProvider.notifier)
-          .addPlace(PlaceItem(title: _enteredTitle));
+          .addPlace(PlaceItem(title: _enteredTitle, image: _selectedImage!));
 
       Navigator.of(context).pop();
     }
@@ -58,8 +61,12 @@ class _AddNewPlaceScreenState extends ConsumerState<AddNewPlaceScreen> {
                   _enteredTitle = value!;
                 },
               ),
-              SizedBox(height: 12,),
-              ImageInput(),
+              SizedBox(height: 12),
+              ImageInput(
+                onPickImage: (image) {
+                  _selectedImage = image;
+                },
+              ),
               SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
