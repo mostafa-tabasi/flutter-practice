@@ -20,17 +20,28 @@ class _AddNewPlaceScreenState extends ConsumerState<AddNewPlaceScreen> {
   final _formKey = GlobalKey<FormState>();
   var _enteredTitle = '';
   File? _selectedImage;
+  PlaceLocation? _selectedLocation;
 
   void _saveItem() {
-    if (_formKey.currentState!.validate() && _selectedImage != null) {
-      _formKey.currentState!.save();
-
-      ref
-          .read(placesProvider.notifier)
-          .addPlace(PlaceItem(title: _enteredTitle, image: _selectedImage!));
-
-      Navigator.of(context).pop();
+    if (!_formKey.currentState!.validate() ||
+        _selectedImage == null ||
+        _selectedLocation == null) {
+      return;
     }
+
+    _formKey.currentState!.save();
+
+    ref
+        .read(placesProvider.notifier)
+        .addPlace(
+          PlaceItem(
+            title: _enteredTitle,
+            image: _selectedImage!,
+            location: _selectedLocation!,
+          ),
+        );
+
+    Navigator.of(context).pop();
   }
 
   @override
@@ -69,7 +80,11 @@ class _AddNewPlaceScreenState extends ConsumerState<AddNewPlaceScreen> {
                 },
               ),
               SizedBox(height: 12),
-              LocationInput(),
+              LocationInput(
+                onSelectLocation: (location) {
+                  _selectedLocation = location;
+                },
+              ),
               SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
