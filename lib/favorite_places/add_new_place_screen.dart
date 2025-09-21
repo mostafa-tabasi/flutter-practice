@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/favorite_places/models/place_item.dart';
 import 'package:flutter_practice/favorite_places/providers/places_provider.dart';
 import 'package:flutter_practice/favorite_places/widgets/image_input.dart';
+import 'package:flutter_practice/favorite_places/widgets/location_inpput.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AddNewPlaceScreen extends ConsumerStatefulWidget {
@@ -67,6 +68,8 @@ class _AddNewPlaceScreenState extends ConsumerState<AddNewPlaceScreen> {
                   _selectedImage = image;
                 },
               ),
+              SizedBox(height: 12),
+              LocationInput(),
               SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
