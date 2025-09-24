@@ -1,14 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/chat_app/chat_app.dart';
 import 'package:flutter_practice/dice_roller/dice_roller_screen.dart';
 import 'package:flutter_practice/expense_tracker/expenses_screen.dart';
 import 'package:flutter_practice/favorite_places/favorite_places_app.dart';
+import 'package:flutter_practice/firebase_options.dart';
 import 'package:flutter_practice/meals/meals_app.dart';
 import 'package:flutter_practice/quiz/quiz_screen.dart';
 import 'package:flutter_practice/shopping_list/shopping_list_app.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
+void main() async {
   /*
   // To lock the rotation on Portrait only
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +20,10 @@ void main() {
     runApp(const MyApp());
   });
   */
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(const MyApp());
 }
 
