@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_practice/chat_app/chat_app.dart';
 import 'package:flutter_practice/dice_roller/dice_roller_screen.dart';
 import 'package:flutter_practice/expense_tracker/expenses_screen.dart';
 import 'package:flutter_practice/favorite_places/favorite_places_app.dart';
@@ -60,6 +61,7 @@ class HomeScreen extends StatelessWidget {
             "Favorite Places",
             ProviderScope(child: const FavoritePlacesApp()),
           ),
+          NavigatorButton("Chat App", const ChatApp()),
         ],
       ),
     );
